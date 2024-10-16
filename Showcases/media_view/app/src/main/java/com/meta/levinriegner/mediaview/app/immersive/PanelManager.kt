@@ -71,6 +71,26 @@ class PanelManager(
         PanelCreator(R.integer.panel_id_media_filter_activity) { ent ->
           createMediaFilterPanel(ent)
         },
+        PanelCreator(R.integer.panel_id_upload_activity) { ent ->
+          Query.where { has(Panel.id) }
+              .eval()
+              .firstOrNull { it.id.toInt() == R.integer.panel_id_gallery_activity }
+              ?.let {
+                ent.setComponent(TransformParent(it))
+                ent.setComponent(
+                    Transform(
+                        Pose(
+                            Vector3(
+                                0f,
+                                (0.45f / 2) +
+                                    0.1f +
+                                    (0.45f) +
+                                    (dpToPx(Dimens.medium.value.toInt()) * PIXELS_TO_METERS * 2),
+                                0f), // Gallery height / 2
+                            Quaternion(0f, 0f, 0f))))
+              }
+          createUploadPanel(ent)
+        },
         PanelCreator(R.integer.panel_id_gallery_menu) { ent ->
           // Parent the menu to the gallery
           Handler(Looper.getMainLooper())
@@ -86,7 +106,7 @@ class PanelManager(
                                   Pose(
                                       Vector3(
                                           0f,
-                                          (0.45f / 2) +
+                                          (0.49f / 2) +
                                               (0.1f / 2) +
                                               (dpToPx(Dimens.medium.value.toInt()) *
                                                   PIXELS_TO_METERS),
@@ -155,17 +175,15 @@ class PanelManager(
     return PanelSceneObject(scene, spatialContext, GalleryActivity::class.java, ent, config)
   }
 
-    private fun createMediaFilterPanel(ent: Entity): PanelSceneObject {
-        val config =
-            PanelConfigOptions(
-                width = 0.175f,
-                height = 0.45f,
-                enableLayer = true,
-                enableTransparent = false,
-                includeGlass = false,
-            )
-        return PanelSceneObject(scene, spatialContext, MediaFilterActivity::class.java, ent, config)
-    }
+  private fun createMediaFilterPanel(ent: Entity): PanelSceneObject {
+    val config =
+        PanelConfigOptions(
+            enableLayer = true,
+            enableTransparent = false,
+            includeGlass = false,
+        )
+    return PanelSceneObject(scene, spatialContext, MediaFilterActivity::class.java, ent, config)
+  }
 
     private fun createUploadPanel(ent: Entity): PanelSceneObject {
         val config =
@@ -181,17 +199,15 @@ class PanelManager(
         return PanelSceneObject(scene, spatialContext, UploadActivity::class.java, ent, config)
     }
 
-    private fun createGalleryMenuPanel(ent: Entity): PanelSceneObject {
-        val config =
-            PanelConfigOptions(
-                width = 0.5f,
-                height = 0.1f,
-                enableLayer = true,
-                enableTransparent = false,
-                includeGlass = false,
-            )
-        return PanelSceneObject(scene, spatialContext, GalleryMenuActivity::class.java, ent, config)
-    }
+  private fun createGalleryMenuPanel(ent: Entity): PanelSceneObject {
+    val config =
+        PanelConfigOptions(
+            enableLayer = true,
+            enableTransparent = false,
+            includeGlass = false,
+        )
+    return PanelSceneObject(scene, spatialContext, GalleryMenuActivity::class.java, ent, config)
+  }
 
     private fun createPlayerPanel(ent: Entity, mediaModel: MediaModel): PanelSceneObject {
         val config = mediaModel.minimizedPanelConfigOptions()

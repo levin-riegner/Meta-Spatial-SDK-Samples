@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.meta.levinriegner.mediaview.app.immersive.compose.ComponentAppSystemActivity
 import com.meta.levinriegner.mediaview.app.immersive.entity.EnvironmentEntities
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
+import com.meta.levinriegner.mediaview.app.immersive.system.TransformAtHead
 import com.meta.levinriegner.mediaview.app.panel.PanelDelegate
 import com.meta.levinriegner.mediaview.data.gallery.model.MediaModel
 import com.meta.spatial.core.Entity
@@ -57,23 +58,29 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
         systemManager.unregisterSystem<LocomotionSystem>()
     }
 
-    override fun onSceneReady() {
-        super.onSceneReady()
-        // Position the user when they launch into the app
-        scene.setViewOrigin(0.0f, 0.0f, -1.0f, 0.0f)
-        // Enable better panel rendering (default)
-        scene.enableHolePunching(true)
-        // Set Mixed Reality passthrough mode
-        scene.enablePassthrough(true)
-        // Create the panels
-        activityScope.launch {
-            glXFManager.inflateGLXF(
-                Uri.parse("scenes/Composition.glxf"),
-                rootEntity = Entity.create(),
-                keyName = "scene"
-            )
-        }
+  override fun onSceneReady() {
+    super.onSceneReady()
+    // Position the user when they launch into the app
+    scene.setViewOrigin(0.0f, 0.0f, -1.0f, 0.0f)
+    // Enable better panel rendering (default)
+    scene.enableHolePunching(true)
+    // Set Mixed Reality passthrough mode
+    scene.enablePassthrough(true)
+    // Create the panels
+    activityScope.launch {
+      // Inflate the scene from Meta Spatial Editor
+      glXFManager.inflateGLXF(
+          Uri.parse("scenes/Composition.glxf"), rootEntity = Entity.create(), keyName = "scene")
+      // Place the gallery panel in front of the user
+      systemManager.registerSystem(
+        TransformAtHead(
+          compositionName = "scene",
+          panelNodeName = "gallery",
+          zOffset = 0.9f,
+        ),
+      )
     }
+  }
 
     // #region PanelDelegate
 

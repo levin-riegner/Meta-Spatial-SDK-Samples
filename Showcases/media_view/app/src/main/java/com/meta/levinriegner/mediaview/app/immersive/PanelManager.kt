@@ -161,16 +161,14 @@ class PanelManager(
     }
 
     private fun createGalleryPanel(ent: Entity): PanelSceneObject {
-        val config =
-            PanelConfigOptions(
-                width = 0.78f,
-                height = 0.45f,
-                enableLayer = true,
-                enableTransparent = false,
-                includeGlass = false,
-            )
-        return PanelSceneObject(scene, spatialContext, GalleryActivity::class.java, ent, config)
-    }
+    val config =
+        PanelConfigOptions(
+            enableLayer = true,
+            enableTransparent = false,
+            includeGlass = false,
+        )
+    return PanelSceneObject(scene, spatialContext, GalleryActivity::class.java, ent, config)
+  }
 
     private fun createMediaFilterPanel(ent: Entity): PanelSceneObject {
         val config =

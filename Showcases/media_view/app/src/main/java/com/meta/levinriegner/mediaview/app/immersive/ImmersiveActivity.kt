@@ -5,7 +5,6 @@ package com.meta.levinriegner.mediaview.app.immersive
 import android.net.Uri
 import android.os.Bundle
 import com.meta.levinriegner.mediaview.BuildConfig
-import com.meta.levinriegner.mediaview.R
 import com.meta.levinriegner.mediaview.app.immersive.compose.ComponentAppSystemActivity
 import com.meta.levinriegner.mediaview.app.immersive.entity.EnvironmentEntities
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
@@ -78,18 +77,22 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
       // Inflate the scene from Meta Spatial Editor
       glXFManager.inflateGLXF(
           Uri.parse("scenes/Composition.glxf"), rootEntity = Entity.create(), keyName = "scene")
-      // Place the gallery panel in front of the user
-      systemManager.registerSystem(
-        TransformAtHead(
-          compositionName = "scene",
-          panelNodeName = "gallery",
-          zOffset = 0.9f,
-        ),
-      )
+      // Register Systems
+      registerSystems()
     }
   }
 
-    // #region PanelDelegate
+  private fun registerSystems() {
+    // Place the gallery panel in front of the user
+    val transformAtHeadSystem = TransformAtHeadSystem(
+      compositionName = "scene",
+      panelNodeName = "gallery",
+      zOffset = 0.9f,
+    )
+    systemManager.registerSystem(transformAtHeadSystem)
+  }
+
+  // region PanelDelegate
 
     override fun openMediaPanel(mediaModel: MediaModel) {
         Timber.i("Opening media with id: ${mediaModel.id}")
@@ -154,13 +157,13 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
         uploadPanelEntityId = ent.id
     }
 
-    override fun closeUploadPanel() {
-        Timber.i("Closing upload panel")
-        uploadPanelEntityId?.let {
-            panelManager.destroyUploadEntity(it)
-            uploadPanelEntityId = null
-        } ?: Timber.w("Upload panel is not open")
-    }
-    // #endregion
+  override fun closeUploadPanel() {
+    Timber.i("Closing upload panel")
+    uploadPanelEntityId?.let {
+      panelManager.destroyUploadEntity(it)
+      uploadPanelEntityId = null
+    } ?: Timber.w("Upload panel is not open")
+  }
+  // endregion
 
 }

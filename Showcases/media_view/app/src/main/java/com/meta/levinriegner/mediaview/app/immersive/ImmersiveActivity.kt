@@ -5,7 +5,6 @@ package com.meta.levinriegner.mediaview.app.immersive
 import android.net.Uri
 import android.os.Bundle
 import com.meta.levinriegner.mediaview.BuildConfig
-import com.meta.levinriegner.mediaview.R
 import com.meta.levinriegner.mediaview.app.immersive.compose.ComponentAppSystemActivity
 import com.meta.levinriegner.mediaview.app.immersive.entity.EnvironmentEntities
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
@@ -94,7 +93,6 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
   }
 
   // region PanelDelegate
-
     override fun openMediaPanel(mediaModel: MediaModel) {
         Timber.i("Opening media with id: ${mediaModel.id}")
         if (_openMedia.value.containsKey(mediaModel.id)) {

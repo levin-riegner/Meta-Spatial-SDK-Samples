@@ -26,4 +26,13 @@ constructor(
     fun setPrivacyPolicyAccepted(accepted: Boolean) {
         userPreferencesService.setPrivacyPolicyAccepted(accepted)
     }
+
+
+    fun isOnboardingCompleted(): Boolean {
+        return userPreferencesService.isOnboardingCompleted()
+    }
+
+    fun setOnboardingCompleted() {
+        userPreferencesService.setOnboardingCompleted()
+    }
 }

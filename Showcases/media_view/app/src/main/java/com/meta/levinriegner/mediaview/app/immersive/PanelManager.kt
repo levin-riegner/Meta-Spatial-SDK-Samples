@@ -10,6 +10,7 @@ import com.meta.levinriegner.mediaview.app.gallery.GalleryActivity
 import com.meta.levinriegner.mediaview.app.gallery.filter.MediaFilterActivity
 import com.meta.levinriegner.mediaview.app.gallery.menu.GalleryMenuActivity
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
+import com.meta.levinriegner.mediaview.app.onboarding.OnboardingActivity
 import com.meta.levinriegner.mediaview.app.player.PlayerActivity
 import com.meta.levinriegner.mediaview.app.player.menu.immersive.ImmersiveMenuActivity
 import com.meta.levinriegner.mediaview.app.player.menu.minimized.MinimizedMenuActivity

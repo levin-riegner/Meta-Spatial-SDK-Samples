@@ -46,13 +46,13 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
     private var uploadPanelEntityId: Long? = null
     private val activityScope = CoroutineScope(Dispatchers.Main)
 
-  override fun registerFeatures(): List<SpatialFeature> {
-    val features = mutableListOf<SpatialFeature>(VRFeature(this))
-    if (BuildConfig.DEBUG) {
-      features.add(CastInputForwardFeature(this))
+    override fun registerFeatures(): List<SpatialFeature> {
+        val features = mutableListOf<SpatialFeature>(VRFeature(this))
+        if (BuildConfig.DEBUG) {
+            features.add(CastInputForwardFeature(this))
+        }
+        return features
     }
-    return features
-  }
 
     override fun registerPanels(): List<PanelRegistration> {
         return panelManager.providePanelRegistrations()
@@ -64,35 +64,38 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
         systemManager.unregisterSystem<LocomotionSystem>()
     }
 
-  override fun onSceneReady() {
-    super.onSceneReady()
-    // Position the user when they launch into the app
-    scene.setViewOrigin(0.0f, 0.0f, -1.0f, 0.0f)
-    // Enable better panel rendering (default)
-    scene.enableHolePunching(true)
-    // Set Mixed Reality passthrough mode
-    scene.enablePassthrough(true)
-    // Create the panels
-    activityScope.launch {
-      // Inflate the scene from Meta Spatial Editor
-      glXFManager.inflateGLXF(
-          Uri.parse("scenes/Composition.glxf"), rootEntity = Entity.create(), keyName = "scene")
-      // Register Systems
-      registerSystems()
+    override fun onSceneReady() {
+        super.onSceneReady()
+        // Position the user when they launch into the app
+        scene.setViewOrigin(0.0f, 0.0f, -1.0f, 0.0f)
+        // Enable better panel rendering (default)
+        scene.enableHolePunching(true)
+        // Set Mixed Reality passthrough mode
+        scene.enablePassthrough(true)
+        // Create the panels
+        activityScope.launch {
+            // Inflate the scene from Meta Spatial Editor
+            glXFManager.inflateGLXF(
+                Uri.parse("scenes/Composition.glxf"),
+                rootEntity = Entity.create(),
+                keyName = "scene"
+            )
+            // Register Systems
+            registerSystems()
+        }
     }
-  }
 
-  private fun registerSystems() {
-    // Place the gallery panel in front of the user
-    val transformAtHeadSystem = TransformAtHeadSystem(
-      compositionName = "scene",
-      panelNodeName = "gallery",
-      zOffset = 0.9f,
-    )
-    systemManager.registerSystem(transformAtHeadSystem)
-  }
+    private fun registerSystems() {
+        // Place the gallery panel in front of the user
+        val transformAtHeadSystem = TransformAtHeadSystem(
+            compositionName = "scene",
+            panelNodeName = "gallery",
+            zOffset = 0.9f,
+        )
+        systemManager.registerSystem(transformAtHeadSystem)
+    }
 
-  // region PanelDelegate
+    // region PanelDelegate
 
     override fun openMediaPanel(mediaModel: MediaModel) {
         Timber.i("Opening media with id: ${mediaModel.id}")
@@ -157,13 +160,18 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
         uploadPanelEntityId = ent.id
     }
 
-  override fun closeUploadPanel() {
-    Timber.i("Closing upload panel")
-    uploadPanelEntityId?.let {
-      panelManager.destroyUploadEntity(it)
-      uploadPanelEntityId = null
-    } ?: Timber.w("Upload panel is not open")
-  }
-  // endregion
+    override fun closeUploadPanel() {
+        Timber.i("Closing upload panel")
+        uploadPanelEntityId?.let {
+            panelManager.destroyUploadEntity(it)
+            uploadPanelEntityId = null
+        } ?: Timber.w("Upload panel is not open")
+    }
+
+    fun openOnboardingPanel() {
+        Timber.i("Opening Onboarding panel")
+        panelManager.createOnboardingEntity()
+    }
+    // endregion
 
 }

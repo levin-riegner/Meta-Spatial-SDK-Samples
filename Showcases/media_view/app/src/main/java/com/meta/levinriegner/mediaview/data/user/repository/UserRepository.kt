@@ -18,4 +18,12 @@ constructor(
   fun setSampleMediaSaved(saved: Boolean) {
     userPreferencesService.setSampleMediaSaved(saved)
   }
+
+  fun isOnboardingCompleted(): Boolean {
+    return userPreferencesService.isOnboardingCompleted()
+  }
+
+  fun setOnboardingCompleted() {
+    userPreferencesService.setOnboardingCompleted()
+  }
 }

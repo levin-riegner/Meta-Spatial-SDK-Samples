@@ -10,6 +10,7 @@ import com.meta.levinriegner.mediaview.app.gallery.GalleryActivity
 import com.meta.levinriegner.mediaview.app.gallery.filter.MediaFilterActivity
 import com.meta.levinriegner.mediaview.app.gallery.menu.GalleryMenuActivity
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
+import com.meta.levinriegner.mediaview.app.onboarding.OnboardingActivity
 import com.meta.levinriegner.mediaview.app.player.PlayerActivity
 import com.meta.levinriegner.mediaview.app.player.menu.immersive.ImmersiveMenuActivity
 import com.meta.levinriegner.mediaview.app.player.menu.minimized.MinimizedMenuActivity
@@ -102,6 +103,46 @@ class PanelManager(
                     )
                 createGalleryMenuPanel(ent)
             },
+            PanelCreator(R.integer.panel_id_onboarding_activity) { ent ->
+                createOnboardingPanel(ent)
+            },
+            PanelCreator(R.integer.panel_id_whats_new_activity) { ent ->
+                createWhatsNewPanel(ent)
+            }
+        )
+    }
+
+    private fun createOnboardingPanel(ent: Entity): PanelSceneObject {
+        val config =
+            PanelConfigOptions(
+                enableLayer = true,
+                enableTransparent = false,
+                includeGlass = false,
+            )
+
+        return PanelSceneObject(scene, spatialContext, OnboardingActivity::class.java, ent, config)
+    }
+
+    fun createOnboardingEntity(): Entity {
+        return Entity.createPanelEntity(
+            R.integer.panel_id_upload_activity, Transform.build { move(0f, 0f, 0f) },
+        )
+    }
+
+    private fun createWhatsNewPanel(ent: Entity): PanelSceneObject {
+        val config =
+            PanelConfigOptions(
+                enableLayer = true,
+                enableTransparent = false,
+                includeGlass = false,
+            )
+
+        return PanelSceneObject(scene, spatialContext, OnboardingActivity::class.java, ent, config)
+    }
+
+    fun createWhatsNewEntity(): Entity {
+        return Entity.createPanelEntity(
+            R.integer.panel_id_whats_new_activity, Transform.build { move(0f, 0f, 0f) },
         )
     }
 

@@ -125,7 +125,7 @@ class PanelManager(
 
     fun createOnboardingEntity(): Entity {
         return Entity.createPanelEntity(
-            R.integer.panel_id_upload_activity, Transform.build { move(0f, 0f, 0f) },
+            R.integer.panel_id_onboarding_activity, Transform.build { move(0f, 0f, 0.02f) },
         )
     }
 

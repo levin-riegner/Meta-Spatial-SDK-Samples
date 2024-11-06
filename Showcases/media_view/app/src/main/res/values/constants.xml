@@ -9,4 +9,5 @@
     <integer name="panel_id_gallery_menu">5</integer>
     <integer name="panel_id_onboarding_activity">6</integer>
     <integer name="panel_id_whats_new_activity">7</integer>
+    <integer name="panel_id_privacy_policy">20</integer>
 </resources>

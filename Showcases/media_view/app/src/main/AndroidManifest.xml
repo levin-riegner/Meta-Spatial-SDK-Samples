@@ -94,6 +94,22 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MediaView"
             tools:ignore="DiscouragedApi">
+            android:name=".app.privacy.PrivacyPolicyActivity"
+            android:allowEmbedded="true"
+            android:exported="true"
+            android:launchMode="standard"
+            android:theme="@style/Theme.MediaView"
+    />
+        <activity
+      android:name=".app.immersive.ImmersiveActivity"
+      android:configChanges="screenSize|screenLayout|orientation|keyboardHidden|keyboard|navigation|uiMode"
+      android:excludeFromRecents="true"
+      android:exported="true"
+      android:launchMode="singleTask"
+      tools:ignore="DiscouragedApi"
+      android:screenOrientation="landscape"
+      android:theme="@style/Theme.MediaView"
+    >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

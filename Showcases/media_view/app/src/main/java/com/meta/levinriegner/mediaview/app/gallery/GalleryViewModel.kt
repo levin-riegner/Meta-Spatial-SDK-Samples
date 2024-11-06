@@ -54,6 +54,10 @@ constructor(
     eventBus.register(this)
   }
 
+  fun onOnboardingButtonPressed() {
+    panelDelegate.openOnboardingPanel()
+  }
+
   fun onMediaSelected(mediaModel: MediaModel) {
     Timber.i("Opening media: ${mediaModel.debugPrint()}")
     panelDelegate.openMediaPanel(mediaModel)

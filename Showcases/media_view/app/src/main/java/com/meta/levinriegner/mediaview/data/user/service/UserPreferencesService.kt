@@ -27,7 +27,6 @@ constructor(
         return sharedPreferences.getBoolean(KEY_IS_ONBOARDING_COMPLETED, false)
     }
 
-
     fun isPrivacyPolicyAccepted(): Boolean {
         return sharedPreferences.getBoolean(KEY_IS_PRIVACY_POLICY_ACCEPTED, false)
     }
@@ -36,9 +35,26 @@ constructor(
         sharedPreferences.edit().putBoolean(KEY_IS_PRIVACY_POLICY_ACCEPTED, accepted).apply()
     }
 
+    fun areReleaseNotesEnabled(): Boolean {
+        return sharedPreferences.getBoolean(KEY_ARE_RELEASE_NOTES_ENABLED, true)
+    }
+
+    fun setReleaseNotesEnabled(enabled: Boolean) {
+        sharedPreferences.edit().putBoolean(KEY_ARE_RELEASE_NOTES_ENABLED, enabled).apply()
+    }
+
+    fun areReleaseNotesSeenFor(version: String): Boolean {
+        return sharedPreferences.getBoolean(version, false)
+    }
+
+    fun setReleaseNotesSeenFor(version: String) {
+        sharedPreferences.edit().putBoolean(version, true).apply()
+    }
+
     companion object {
         private const val KEY_IS_SAMPLE_MEDIA_SAVED = "is_sample_media_saved"
         private const val KEY_IS_PRIVACY_POLICY_ACCEPTED = "is_privacy_policy_accepted"
         private const val KEY_IS_ONBOARDING_COMPLETED = "is_onboarding_completed"
+        private const val KEY_ARE_RELEASE_NOTES_ENABLED = "are_release_notes_enabled"
     }
 }

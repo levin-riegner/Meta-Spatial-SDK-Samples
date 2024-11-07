@@ -10,6 +10,7 @@ import com.meta.levinriegner.mediaview.app.gallery.GalleryActivity
 import com.meta.levinriegner.mediaview.app.gallery.filter.MediaFilterActivity
 import com.meta.levinriegner.mediaview.app.gallery.menu.GalleryMenuActivity
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
+import com.meta.levinriegner.mediaview.app.onboarding.OnboardingActivity
 import com.meta.levinriegner.mediaview.app.player.PlayerActivity
 import com.meta.levinriegner.mediaview.app.player.menu.immersive.ImmersiveMenuActivity
 import com.meta.levinriegner.mediaview.app.player.menu.minimized.MinimizedMenuActivity
@@ -23,6 +24,7 @@ import com.meta.levinriegner.mediaview.app.shared.model.panelId
 import com.meta.levinriegner.mediaview.app.shared.model.panelWidthAndHeight
 import com.meta.levinriegner.mediaview.app.shared.theme.Dimens
 import com.meta.levinriegner.mediaview.app.upload.UploadActivity
+import com.meta.levinriegner.mediaview.app.whatsnew.WhatsNewActivity
 import com.meta.levinriegner.mediaview.data.gallery.model.MediaModel
 import com.meta.levinriegner.mediaview.data.gallery.model.MediaType.VIDEO_360
 import com.meta.spatial.core.Entity
@@ -35,6 +37,7 @@ import com.meta.spatial.runtime.AlphaMode
 import com.meta.spatial.runtime.PanelConfigOptions
 import com.meta.spatial.runtime.PanelConfigOptions.Companion.DEFAULT_DPI
 import com.meta.spatial.runtime.PanelSceneObject
+import com.meta.spatial.runtime.PanelShapeType
 import com.meta.spatial.runtime.QuadLayerConfig
 import com.meta.spatial.runtime.Scene
 import com.meta.spatial.toolkit.AppSystemActivity
@@ -59,10 +62,8 @@ class PanelManager(
 ) {
     private val zIndexMenu = 99
 
-    private val galleryPanelDistance = 0.9f
     private val playerPanelDistance = 0.8f
     private val immersiveMenuHeight = 0.1f
-    private val uploadPanelDistance = 0.7f
 
     private lateinit var galleryEntity: Entity
 
@@ -107,10 +108,37 @@ class PanelManager(
                     )
                 createGalleryMenuPanel(ent)
             },
+            PanelCreator(R.integer.panel_id_onboarding_activity) { ent ->
+                createOnboardingPanel(ent)
+            },
+            PanelCreator(R.integer.panel_id_whats_new_activity) { ent ->
+                createWhatsNewPanel(ent)
+            },
             PanelCreator(R.integer.panel_id_privacy_policy) { ent ->
                 createPrivacyPolicyPanel(ent)
-            },
+            }
         )
+    }
+
+    private fun createWhatsNewPanel(ent: Entity): PanelSceneObject {
+        val config = PanelConfigOptions(
+            enableLayer = true,
+            enableTransparent = false,
+            includeGlass = false,
+        )
+
+        return PanelSceneObject(scene, spatialContext, WhatsNewActivity::class.java, ent, config)
+    }
+
+    private fun createOnboardingPanel(ent: Entity): PanelSceneObject {
+        val config =
+            PanelConfigOptions(
+                enableLayer = true,
+                enableTransparent = false,
+                includeGlass = false,
+            )
+
+        return PanelSceneObject(scene, spatialContext, OnboardingActivity::class.java, ent, config)
     }
 
     fun provideUploadPanelRegistration(): PanelRegistration {
@@ -483,6 +511,25 @@ class PanelManager(
             ?.entity
             ?.setComponent(Visible(show))
     }
+
+    fun toggleOnboarding(show: Boolean) {
+        val panel = getComposition().tryGetNodeByName(GLXFConstants.NODE_NAME_ONBOARDING)
+        if (panel?.entity == null) {
+            Timber.w("Onboarding panel entity not found")
+            return
+        }
+        panel.entity.setComponent(Visible(show))
+    }
+
+    fun toggleWhatsNew(show: Boolean) {
+        val panel = getComposition().tryGetNodeByName(GLXFConstants.NODE_NAME_WHATS_NEW)
+        if (panel?.entity == null) {
+            Timber.w("Whats New panel entity not found")
+            return
+        }
+        panel.entity.setComponent(Visible(show))
+    }
+
 
     companion object {
         private const val PIXELS_TO_METERS = 0.0254f / 100f

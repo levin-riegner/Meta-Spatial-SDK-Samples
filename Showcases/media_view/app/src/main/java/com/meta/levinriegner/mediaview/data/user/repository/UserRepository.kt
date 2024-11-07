@@ -10,7 +10,6 @@ class UserRepository
 constructor(
     private val userPreferencesService: UserPreferencesService,
 ) {
-
     fun isSampleMediaSaved(): Boolean {
         return userPreferencesService.isSampleMediaSaved()
     }
@@ -27,6 +26,25 @@ constructor(
         userPreferencesService.setPrivacyPolicyAccepted(accepted)
     }
 
+    fun areReleaseNotesEnabled(): Boolean {
+        return userPreferencesService.areReleaseNotesEnabled()
+    }
+
+    fun enableReleaseNotes() {
+        userPreferencesService.setReleaseNotesEnabled(true)
+    }
+
+    fun disableReleaseNotes() {
+        userPreferencesService.setReleaseNotesEnabled(false)
+    }
+
+    fun areReleaseNotesSeenFor(version: String): Boolean {
+        return userPreferencesService.areReleaseNotesSeenFor(version)
+    }
+
+    fun setReleaseNotesSeenFor(version: String) {
+        userPreferencesService.setReleaseNotesSeenFor(version)
+    }
 
     fun isOnboardingCompleted(): Boolean {
         return userPreferencesService.isOnboardingCompleted()

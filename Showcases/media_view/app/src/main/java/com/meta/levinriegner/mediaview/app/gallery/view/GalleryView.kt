@@ -18,11 +18,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.sharp.Info
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -250,22 +250,28 @@ private fun Header(
                             }
                         }
                     }
-                    /** Box(modifier = Modifier.size(Dimens.medium))
-                     * Hidden for 0.0.13
-                     * TODO: Style
+
+                    Box(modifier = Modifier.size(Dimens.medium))
                     Switch(
-                    colors = SwitchDefaults.colors().copy(
-                    uncheckedThumbColor = AppColor.White60,
-                    uncheckedBorderColor = AppColor.White60,
-                    uncheckedTrackColor = AppColor.GradientStart,
-                    checkedThumbColor = AppColor.GradientStart,
-                    checkedBorderColor = AppColor.White,
-                    checkedTrackColor = AppColor.White,
-                    ),
-                    checked = showMetadata,
-                    onCheckedChange = {
-                    onToggleMetadata(it)
-                    })**/
+                        thumbContent = {
+                            Icon(
+                                Icons.Sharp.Info,
+                                "Toggle media info",
+                            )
+                        },
+                        colors = SwitchDefaults.colors().copy(
+                            uncheckedThumbColor = AppColor.White60,
+                            uncheckedBorderColor = Color.Transparent,
+                            uncheckedTrackColor = AppColor.White15,
+                            checkedThumbColor = Color.White,
+                            checkedBorderColor = Color.Transparent,
+                            checkedTrackColor = AppColor.White15,
+                            checkedIconColor = AppColor.MetaBlu,
+                        ),
+                        checked = showMetadata,
+                        onCheckedChange = {
+                            onToggleMetadata(it)
+                        })
                 }
             }
         }
@@ -280,7 +286,7 @@ private fun MediaGrid(
     showMetadata: Boolean,
     onItemClicked: (MediaModel) -> Unit,
 ) {
-    LazyVerticalGrid (
+    LazyVerticalGrid(
         modifier = modifier,
         contentPadding = PaddingValues(Dimens.large),
         verticalArrangement = Arrangement.spacedBy(Dimens.small),

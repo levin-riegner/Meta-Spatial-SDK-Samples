@@ -202,8 +202,8 @@ spatial {
     // cliPath.set("/Applications/Meta Spatial Editor.app/Contents/MacOS/CLI")
     exportItems {
       item {
-        projectPath.set("$sceneProjectPath/Main.metaspatial")
-        outputPath.set("app/src/main/assets/scenes")
+        projectPath.set(File("$sceneProjectPath/Main.metaspatial"))
+        outputPath.set(File("app/src/main/assets/scenes"))
       }
     }
   }

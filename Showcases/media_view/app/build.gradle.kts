@@ -201,15 +201,14 @@ dependencies {
 val sceneProjectPath = "app/src/main/assets/scenes"
 
 spatial {
-    allowUsageDataCollection.set(true)
-    scenes {
-        // if you have installed Meta Spatial Editor somewhere else, update the file path.
-        // cliPath.set("/Applications/Meta Spatial Editor.app/Contents/MacOS/CLI")
-        exportItems {
-            item {
-                projectPath.set(File("$sceneProjectPath/Main.metaspatial"))
-                outputPath.set(File("app/src/main/assets/scenes"))
-            }
-        }
+  allowUsageDataCollection.set(true)
+  scenes {
+    // if you have installed Meta Spatial Editor somewhere else, update the file path.
+    // cliPath.set("/Applications/Meta Spatial Editor.app/Contents/MacOS/CLI")
+    exportItems {
+      item {
+        projectPath.set(File("$sceneProjectPath/Main.metaspatial"))
+        outputPath.set(File("app/src/main/assets/scenes"))
+      }
     }
 }

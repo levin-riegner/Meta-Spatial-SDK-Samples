@@ -8,15 +8,32 @@ pluginManagement {
     google()
     mavenCentral()
     gradlePluginPortal()
+    // Libs from QA channel - intended only for release candidates
+    maven {
+      url = uri("https://s01.oss.sonatype.org/content/repositories/commeta-1077")
+    }
+    // Libs from QA channel - intended only for release candidates
+    maven {
+      url = uri("https://s01.oss.sonatype.org/content/repositories/commeta-1079")
+    }
   }
   plugins { id("com.meta.spatial.plugin") version metaSpatialSdkVersion }
 }
 
 dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
   repositories {
     google()
     mavenCentral()
+    // Libs from QA channel - intended only for release candidates
+    maven {
+      url = uri("https://s01.oss.sonatype.org/content/repositories/commeta-1077")
+    }
+    // Libs from QA channel - intended only for release candidates
+    maven {
+      url = uri("https://s01.oss.sonatype.org/content/repositories/commeta-1079")
+    }
   }
 }
 

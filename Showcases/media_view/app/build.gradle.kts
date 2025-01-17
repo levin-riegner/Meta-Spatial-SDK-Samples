@@ -56,33 +56,38 @@ android {
         "String",
         "DRIVE_CLIENT_ID",
         System.getenv("DRIVE_CLIENT_ID")
-            ?: properties.getProperty("DRIVE_CLIENT_ID")
-            ?: "\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"")
+          ?: properties.getProperty("DRIVE_CLIENT_ID")
+          ?: "\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+    )
     buildConfigField(
         "String",
         "DRIVE_API_KEY",
         System.getenv("DRIVE_API_KEY")
-            ?: properties.getProperty("DRIVE_API_KEY")
-            ?: "\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"")
+          ?: properties.getProperty("DRIVE_API_KEY")
+          ?: "\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+    )
     buildConfigField(
         "String",
         "DRIVE_APP_ID",
         System.getenv("DRIVE_APP_ID")
-            ?: properties.getProperty("DRIVE_APP_ID")
-            ?: "\"XXXXXXXXXXXX\"")
+          ?: properties.getProperty("DRIVE_APP_ID")
+          ?: "\"XXXXXXXXXXXX\"",
+    )
     // Datadog Keys
     buildConfigField(
         "String",
         "DATADOG_CLIENT_TOKEN",
         System.getenv("DATADOG_CLIENT_TOKEN")
-            ?: properties.getProperty("DATADOG_CLIENT_TOKEN")
-            ?: "\"XXXXXXXXXXXX\"")
+          ?: properties.getProperty("DATADOG_CLIENT_TOKEN")
+          ?: "\"XXXXXXXXXXXX\"",
+    )
     buildConfigField(
         "String",
         "DATADOG_APPLICATION_ID",
         System.getenv("DATADOG_APPLICATION_ID")
-            ?: properties.getProperty("DATADOG_APPLICATION_ID")
-            ?: "\"XXXXXXXXXXXX\"")
+          ?: properties.getProperty("DATADOG_APPLICATION_ID")
+          ?: "\"XXXXXXXXXXXX\"",
+    )
   }
 
   signingConfigs {
@@ -198,6 +203,15 @@ dependencies {
   implementation("com.meta.spatial:meta-spatial-sdk-vr:$metaSpatialSdkVersion")
   implementation("com.meta.spatial:meta-spatial-sdk-mruk:$metaSpatialSdkVersion")
   implementation("com.meta.spatial:meta-spatial-sdk-castinputforward:$metaSpatialSdkVersion")
+  // Meta Spatial SDK libs
+  implementation("com.meta.spatial:meta-spatial-sdk:$metaSpatialSdkVersion")
+  implementation("com.meta.spatial:meta-spatial-sdk-ovrmetrics:$metaSpatialSdkVersion")
+  implementation("com.meta.spatial:meta-spatial-sdk-physics:$metaSpatialSdkVersion")
+  implementation("com.meta.spatial:meta-spatial-sdk-toolkit:$metaSpatialSdkVersion")
+  implementation("com.meta.spatial:meta-spatial-sdk-vr:$metaSpatialSdkVersion")
+  implementation("com.meta.spatial:meta-spatial-sdk-mruk:$metaSpatialSdkVersion")
+  implementation("com.meta.spatial:meta-spatial-sdk-castinputforward:$metaSpatialSdkVersion")
+  implementation("com.meta.spatial:meta-spatial-sdk-compose:$metaSpatialSdkVersion")
 
   // Meta Spatial SDK dependencies
   implementation("com.squareup.okhttp3:okhttp:4.12.0")

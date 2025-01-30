@@ -57,10 +57,10 @@ fun MediaModel.calculateDimensionsInMeters(): Pair<Float, Float>? {
 
 fun MediaModel.panelWidthAndHeight(): Pair<Float, Float> {
   return calculateDimensionsInMeters()
-      ?: Pair(
-          1.2f,
-          0.9f,
-      )
+    ?: Pair(
+        1.2f,
+        0.9f,
+    )
 }
 
 fun MediaModel.textureWidthAndHeight(): Pair<Int, Int> {
@@ -72,95 +72,100 @@ fun MediaModel.textureWidthAndHeight(): Pair<Int, Int> {
       dpToPx(defaultTextureDp) + dpToPx(mediaPanelSpacingOffsetDp),
       dpToPx(
           (defaultTextureDp * (panelHeight / panelWidth)).toInt() +
-              dpToPx(mediaPanelSpacingOffsetDp)))
+              dpToPx(mediaPanelSpacingOffsetDp),
+      ),
+  )
 }
 
 fun MediaModel.minimizedPanelConfigOptions(): PanelConfigOptions {
-  val (panelWidth, panelHeight) = panelWidthAndHeight()
+  val (panelWidth, panelHeight) = panelWidthAndHeight().let {
+    Pair(it.first / 2, it.second / 2)
+  }
   val (layoutWidthInPx, layoutHeightInPx) = textureWidthAndHeight()
   return when (mediaType) {
     IMAGE_2D ->
-        PanelConfigOptions(
-            width = panelWidth,
-            height = panelHeight,
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            enableLayer = true,
-            enableTransparent = false,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = panelWidth,
+          height = panelHeight,
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          enableLayer = true,
+          enableTransparent = false,
+          includeGlass = false,
+      )
 
     VIDEO_2D ->
-        PanelConfigOptions(
-            width = panelWidth,
-            height = panelHeight,
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            enableLayer = true,
-            enableTransparent = false,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = panelWidth,
+          height = panelHeight,
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          enableLayer = true,
+          enableTransparent = false,
+          includeGlass = false,
+      )
 
     IMAGE_PANORAMA ->
-        PanelConfigOptions(
-            width = panelWidth,
-            height = panelHeight,
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            panelShader = "data/shaders/punch/punch",
-            alphaMode = AlphaMode.HOLE_PUNCH,
-            includeGlass = false,
-            sceneMeshCreator = { texture: SceneTexture ->
-              val unlitMaterial =
-                  SceneMaterial(texture, AlphaMode.OPAQUE, SceneMaterial.UNLIT_SHADER)
-              SceneMesh.singleSidedQuad(panelWidth / 2, panelHeight / 2, unlitMaterial)
-            })
+      PanelConfigOptions(
+          width = panelWidth,
+          height = panelHeight,
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          panelShader = "data/shaders/punch/punch",
+          alphaMode = AlphaMode.HOLE_PUNCH,
+          includeGlass = false,
+          sceneMeshCreator = { texture: SceneTexture ->
+            val unlitMaterial =
+                SceneMaterial(texture, AlphaMode.OPAQUE, SceneMaterial.UNLIT_SHADER)
+            SceneMesh.singleSidedQuad(panelWidth / 2, panelHeight / 2, unlitMaterial)
+          },
+      )
 
     IMAGE_360 ->
-        PanelConfigOptions(
-            width = min(panelWidth, panelHeight),
-            height = min(panelWidth, panelHeight),
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            layerConfig = EquirectLayerConfig(min(panelWidth, panelHeight) / 2),
-            panelShader = "data/shaders/punch/punch",
-            alphaMode = AlphaMode.HOLE_PUNCH,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = min(panelWidth, panelHeight),
+          height = min(panelWidth, panelHeight),
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          layerConfig = EquirectLayerConfig(min(panelWidth, panelHeight) / 2),
+          panelShader = "data/shaders/punch/punch",
+          alphaMode = AlphaMode.HOLE_PUNCH,
+          includeGlass = false,
+      )
 
     VIDEO_360 ->
-        PanelConfigOptions(
-            width = min(panelWidth, panelHeight),
-            height = min(panelWidth, panelHeight),
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            layerConfig = EquirectLayerConfig(min(panelWidth, panelHeight) / 2),
-            panelShader = "data/shaders/punch/punch",
-            alphaMode = AlphaMode.HOLE_PUNCH,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = min(panelWidth, panelHeight),
+          height = min(panelWidth, panelHeight),
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          layerConfig = EquirectLayerConfig(min(panelWidth, panelHeight) / 2),
+          panelShader = "data/shaders/punch/punch",
+          alphaMode = AlphaMode.HOLE_PUNCH,
+          includeGlass = false,
+      )
 
     VIDEO_SPATIAL ->
-        PanelConfigOptions(
-            width = panelWidth,
-            height = panelHeight,
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            enableLayer = true,
-            enableTransparent = false,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = panelWidth,
+          height = panelHeight,
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          enableLayer = true,
+          enableTransparent = false,
+          includeGlass = false,
+      )
 
     null ->
-        PanelConfigOptions(
-            width = panelWidth,
-            height = panelHeight,
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            enableLayer = true,
-            enableTransparent = false,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = panelWidth,
+          height = panelHeight,
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          enableLayer = true,
+          enableTransparent = false,
+          includeGlass = false,
+      )
   }
 }
 
@@ -172,51 +177,52 @@ fun MediaModel.maximizedPanelConfigOptions(): PanelConfigOptions {
     VIDEO_2D,
     VIDEO_SPATIAL,
     null ->
-        PanelConfigOptions(
-            width = panelWidth * 2,
-            height = panelHeight * 2,
-            enableLayer = true,
-            enableTransparent = false,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = panelWidth * 2,
+          height = panelHeight * 2,
+          enableLayer = true,
+          enableTransparent = false,
+          includeGlass = false,
+      )
 
     IMAGE_PANORAMA ->
-        PanelConfigOptions(
-            fractionOfScreen = 0.1f,
-            width = panelWidth * 2,
-            height = panelHeight * 2,
-            panelShader = "data/shaders/punch/punch",
-            alphaMode = AlphaMode.HOLE_PUNCH,
-            includeGlass = false,
-            sceneMeshCreator = { texture: SceneTexture ->
-              val unlitMaterial =
-                  SceneMaterial(texture, AlphaMode.OPAQUE, SceneMaterial.UNLIT_SHADER)
-              SceneMesh.cylinderSurface(5.0f, 5.0f, 0.7f, unlitMaterial)
-            })
+      PanelConfigOptions(
+          fractionOfScreen = 0.1f,
+          width = panelWidth * 2,
+          height = panelHeight * 2,
+          panelShader = "data/shaders/punch/punch",
+          alphaMode = AlphaMode.HOLE_PUNCH,
+          includeGlass = false,
+          sceneMeshCreator = { texture: SceneTexture ->
+            val unlitMaterial =
+                SceneMaterial(texture, AlphaMode.OPAQUE, SceneMaterial.UNLIT_SHADER)
+            SceneMesh.cylinderSurface(5.0f, 5.0f, 0.7f, unlitMaterial)
+          },
+      )
 
     IMAGE_360 ->
-        PanelConfigOptions(
-            width = panelWidth,
-            height = panelHeight,
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            layerConfig = EquirectLayerConfig(2.0f),
-            panelShader = "data/shaders/punch/punch",
-            alphaMode = AlphaMode.HOLE_PUNCH,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = panelWidth,
+          height = panelHeight,
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          layerConfig = EquirectLayerConfig(2.0f),
+          panelShader = "data/shaders/punch/punch",
+          alphaMode = AlphaMode.HOLE_PUNCH,
+          includeGlass = false,
+      )
 
     VIDEO_360 ->
-        PanelConfigOptions(
-            width = panelWidth,
-            height = panelHeight,
-            layoutWidthInPx = layoutWidthInPx,
-            layoutHeightInPx = layoutHeightInPx,
-            layerConfig = EquirectLayerConfig(2.0f),
-            panelShader = "data/shaders/punch/punch",
-            alphaMode = AlphaMode.HOLE_PUNCH,
-            includeGlass = false,
-        )
+      PanelConfigOptions(
+          width = panelWidth,
+          height = panelHeight,
+          layoutWidthInPx = layoutWidthInPx,
+          layoutHeightInPx = layoutHeightInPx,
+          layerConfig = EquirectLayerConfig(2.0f),
+          panelShader = "data/shaders/punch/punch",
+          alphaMode = AlphaMode.HOLE_PUNCH,
+          includeGlass = false,
+      )
   }
 }
 

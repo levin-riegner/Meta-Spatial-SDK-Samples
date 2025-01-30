@@ -88,6 +88,7 @@ class PlayerActivity : ComponentActivity() {
       // UI
       Surface(modifier = Modifier.fillMaxSize(), color = Color.Transparent) {
         Box(Modifier.fillMaxSize()) {
+//          return@Box Box(Modifier)
           when (val state = uiState) {
             PlayerState.Empty -> Box(Modifier)
             is PlayerState.Image2D -> {

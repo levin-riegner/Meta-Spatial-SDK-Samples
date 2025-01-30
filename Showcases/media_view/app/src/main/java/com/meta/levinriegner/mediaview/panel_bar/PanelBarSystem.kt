@@ -2,20 +2,57 @@
 
 package com.meta.levinriegner.mediaview.panel_bar
 
+import androidx.compose.ui.res.painterResource
+import com.meta.spatial.core.Pose
+import com.meta.spatial.core.Quaternion
 import com.meta.spatial.core.Query
 import com.meta.spatial.core.SystemBase
+import com.meta.spatial.core.Vector3
+import com.meta.spatial.toolkit.Panel
+import com.meta.spatial.toolkit.PlayerBodyAttachmentSystem
 import com.meta.spatial.toolkit.Transform
+import timber.log.Timber
 
 class PanelBarSystem : SystemBase() {
   override fun execute() {
 
-    val q = Query.where { has(PanelBarComponent.id) }
-
+    val q = Query.where { has(PanelBarComponent.id) and changed(Transform.id) }
     for (entity in q.eval()) {
-      entity.getComponent<PanelBarComponent>().parent.get()?.let { parent ->
-        // TODO: Align panel bar with parent entity, do we even need this with TransformParent?
-        parent.getComponent<Transform>().transform
+      val panelBarComponent = entity.getComponent<PanelBarComponent>()
+      val parent = panelBarComponent.parent
+      Timber.i("Panel bar has parent")
+      val currentPose = entity.getComponent<Transform>().transform
+      val previousPose = panelBarComponent.pose
+      Timber.i("Current pose: $currentPose")
+      Timber.i("Previous pose: $previousPose")
+      if (currentPose != previousPose) {
+        // Calculate difference
+        val diff = currentPose.t - previousPose.t
+        val qDiff = currentPose.q * previousPose.q.inverse()
+        Timber.i("Panel bar moved by $diff and rotated by $qDiff")
+        // Apply difference to parent
+        val parentPose = parent.getComponent<Transform>().transform
+        val newParentPose = parentPose.copy(
+            t = parentPose.t + diff,
+            q = parentPose.q * qDiff,
+        )
+        parent.setComponent(Transform(newParentPose))
+        // Update component
+        entity.setComponent(panelBarComponent.copy(pose = currentPose))
+        Timber.i("Panel bar moved to parent")
       }
     }
+  }
+
+  private fun getHeadPose(): Pose? {
+    val head =
+        systemManager
+            .tryFindSystem<PlayerBodyAttachmentSystem>()
+            ?.tryGetLocalPlayerAvatarBody()
+            ?.head
+
+    val headPose = head?.tryGetComponent<Transform>()?.transform
+    if (headPose == null || headPose == Pose()) return null
+    return headPose
   }
 }

@@ -11,8 +11,12 @@ import com.meta.levinriegner.mediaview.app.immersive.entity.EnvironmentEntities
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
 import com.meta.levinriegner.mediaview.app.immersive.system.LookAtHeadSystem
 import com.meta.levinriegner.mediaview.app.panel.PanelDelegate
+import com.meta.levinriegner.mediaview.app.shared.model.panelWidthAndHeight
 import com.meta.levinriegner.mediaview.data.gallery.model.MediaModel
+import com.meta.levinriegner.mediaview.panel_bar.PanelBar
+import com.meta.levinriegner.mediaview.panel_bar.SpatialComponents
 import com.meta.spatial.castinputforward.CastInputForwardFeature
+import com.meta.spatial.compose.ComposeFeature
 import com.meta.spatial.core.Entity
 import com.meta.spatial.core.SpatialFeature
 import com.meta.spatial.toolkit.PanelRegistration
@@ -48,7 +52,7 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
   private val activityScope = CoroutineScope(Dispatchers.Main)
 
   override fun registerFeatures(): List<SpatialFeature> {
-    val features = mutableListOf<SpatialFeature>(VRFeature(this))
+    val features = mutableListOf<SpatialFeature>(VRFeature(this), ComposeFeature())
     if (BuildConfig.DEBUG) {
       features.add(CastInputForwardFeature(this))
     }
@@ -95,10 +99,12 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
 
   private fun registerComponents() {
     componentManager.registerComponent<LookAtHead>(LookAtHead.Companion)
+    SpatialComponents.registerComponents(componentManager)
   }
 
   private fun registerSystems() {
     systemManager.registerSystem(LookAtHeadSystem())
+    SpatialComponents.registerSystems(systemManager)
   }
 
   // region PanelDelegate
@@ -120,6 +126,11 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
 
     // Create Entity
     val playerEntity = panelManager.createPlayerEntity(mediaModel)
+    PanelBar(
+        appSystemActivity = this@ImmersiveActivity,
+        parent = playerEntity,
+        parentHeightMeters = mediaModel.panelWidthAndHeight().second / 2f,
+    ).attach()
     panelManager.createPlayerMenuEntity(mediaModel, playerEntity)
 
     _openMedia.value = _openMedia.value.toMutableMap().apply { put(mediaModel.id, mediaModel) }

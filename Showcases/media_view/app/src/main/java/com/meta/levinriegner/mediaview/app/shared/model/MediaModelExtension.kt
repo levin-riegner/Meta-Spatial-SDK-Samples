@@ -15,6 +15,7 @@ import com.meta.spatial.runtime.AlphaMode
 import com.meta.spatial.runtime.EquirectLayerConfig
 import com.meta.spatial.runtime.PanelConfigOptions
 import com.meta.spatial.runtime.PanelConfigOptions.Companion.DEFAULT_DPI
+import com.meta.spatial.runtime.PanelShapeType
 import com.meta.spatial.runtime.SceneMaterial
 import com.meta.spatial.runtime.SceneMesh
 import com.meta.spatial.runtime.SceneTexture
@@ -127,10 +128,12 @@ fun MediaModel.minimizedPanelConfigOptions(): PanelConfigOptions {
           height = min(panelWidth, panelHeight),
           layoutWidthInPx = layoutWidthInPx,
           layoutHeightInPx = layoutHeightInPx,
-          layerConfig = EquirectLayerConfig(min(panelWidth, panelHeight) / 2),
+          panelShapeType = PanelShapeType.EQUIRECT,
+          radiusForCylinderOrSphere = 3f,
+          includeGlass = false,
+          enableTransparent = true,
           panelShader = "data/shaders/punch/punch",
           alphaMode = AlphaMode.HOLE_PUNCH,
-          includeGlass = false,
       )
 
     VIDEO_360 ->
@@ -202,14 +205,14 @@ fun MediaModel.maximizedPanelConfigOptions(): PanelConfigOptions {
 
     IMAGE_360 ->
       PanelConfigOptions(
-          width = panelWidth,
-          height = panelHeight,
-          layoutWidthInPx = layoutWidthInPx,
-          layoutHeightInPx = layoutHeightInPx,
-          layerConfig = EquirectLayerConfig(2.0f),
+          layoutWidthInPx = layoutWidthInPx /2,
+          layoutHeightInPx = layoutHeightInPx/2,
+          panelShapeType = PanelShapeType.EQUIRECT,
+          radiusForCylinderOrSphere = 3f,
+          includeGlass = false,
+          enableTransparent = true,
           panelShader = "data/shaders/punch/punch",
           alphaMode = AlphaMode.HOLE_PUNCH,
-          includeGlass = false,
       )
 
     VIDEO_360 ->

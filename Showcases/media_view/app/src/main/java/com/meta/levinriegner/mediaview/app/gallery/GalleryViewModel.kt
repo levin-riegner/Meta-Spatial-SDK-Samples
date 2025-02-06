@@ -19,6 +19,7 @@ import com.meta.levinriegner.mediaview.data.gallery.model.MediaModel
 import com.meta.levinriegner.mediaview.data.gallery.model.MediaSortBy
 import com.meta.levinriegner.mediaview.data.gallery.repository.GalleryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +43,7 @@ constructor(
   private val _events = MutableSharedFlow<GalleryEvent>()
   val events = _events.asSharedFlow()
 
-  private val _filter = MutableStateFlow(MediaFilter.ALL)
+  private val _filter = MutableStateFlow(MediaFilter.MEDIA_360)
   val filter = _filter.asStateFlow()
 
   private val _sortBy = MutableStateFlow(MediaSortBy.DateDesc)
@@ -90,10 +91,10 @@ constructor(
           Timber.i("Got media: ${media.size}")
           _state.value = UiState.Success(media)
           // DEV: Use to navigate while developing
-          //                val devModel = media[0]
-          //                onMediaSelected(devModel)
-          //                delay(200L)
-          //                panelDelegate.maximizeMedia(devModel)
+                          val devModel = media[0]
+                          onMediaSelected(devModel)
+                          delay(200L)
+//                          panelDelegate.maximizeMedia(devModel)
         } catch (t: Throwable) {
           Timber.w("Failed to get media: ${t.message}")
           _state.value = UiState.Error("Failed to get media: ${t.message}")

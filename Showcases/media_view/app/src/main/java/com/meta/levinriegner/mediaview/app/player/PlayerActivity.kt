@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +30,7 @@ import com.meta.levinriegner.mediaview.app.player.view.ImageView
 import com.meta.levinriegner.mediaview.app.player.view.PanoramaImageView
 import com.meta.levinriegner.mediaview.app.player.view.VideoView
 import com.meta.levinriegner.mediaview.app.shared.theme.MediaViewTheme
+import com.meta.levinriegner.mediaview.app.shared.util.TouchDebugGridView
 import com.meta.levinriegner.mediaview.app.shared.view.ErrorView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -61,17 +63,17 @@ class PlayerActivity : ComponentActivity() {
             is PlayerEvent.OnImageSaved -> {
               if (event.success) {
                 Toast.makeText(
-                        this@PlayerActivity,
-                        getString(R.string.save_as_new_image_success),
-                        Toast.LENGTH_LONG,
-                    )
+                    this@PlayerActivity,
+                    getString(R.string.save_as_new_image_success),
+                    Toast.LENGTH_LONG,
+                )
                     .show()
               } else {
                 Toast.makeText(
-                        this@PlayerActivity,
-                        event.error ?: getString(R.string.save_as_new_image_error),
-                        Toast.LENGTH_LONG,
-                    )
+                    this@PlayerActivity,
+                    event.error ?: getString(R.string.save_as_new_image_error),
+                    Toast.LENGTH_LONG,
+                )
                     .show()
               }
             }
@@ -98,11 +100,13 @@ class PlayerActivity : ComponentActivity() {
                   cropRequested = cropRequested,
                   onImageCropped = { viewModel.onImageCropped(it) },
               )
-              //              Box(contentAlignment = Alignment.Center, modifier =
-              // Modifier.fillMaxSize()) {
-              //                ImageView(uri = state.uri, cropState = state.cropState)
-              //                TouchDebugGridView(count = 100)
-              //              }
+              Box(
+                  contentAlignment = Alignment.Center,
+                  modifier =
+                  Modifier.fillMaxSize(),
+              ) {
+                TouchDebugGridView(count = 100)
+              }
             }
 
             is PlayerState.ImagePanorama -> {

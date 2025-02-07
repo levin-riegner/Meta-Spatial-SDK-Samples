@@ -43,7 +43,7 @@ constructor(
   private val _events = MutableSharedFlow<GalleryEvent>()
   val events = _events.asSharedFlow()
 
-  private val _filter = MutableStateFlow(MediaFilter.MEDIA_360)
+  private val _filter = MutableStateFlow(MediaFilter.ALL)
   val filter = _filter.asStateFlow()
 
   private val _sortBy = MutableStateFlow(MediaSortBy.DateDesc)

@@ -20,7 +20,15 @@ class PanelBarSystem : SystemBase() {
     for (entity in q.eval()) {
       val panelBarComponent = entity.getComponent<PanelBarComponent>()
       val parent = panelBarComponent.parent
+      val parentTransform = parent.tryGetComponent<Transform>()
+      if (parentTransform == null) {
+        // TODO: This doesn't work (code is never reached)
+        Timber.d("Parent is destroyed")
+        entity.destroy()
+        return
+      }
       Timber.i("Panel bar has parent")
+      // Check is alive
       val currentPose = entity.getComponent<Transform>().transform
       val previousPose = panelBarComponent.pose
       Timber.i("Current pose: $currentPose")
@@ -31,7 +39,7 @@ class PanelBarSystem : SystemBase() {
         val qDiff = currentPose.q * previousPose.q.inverse()
         Timber.i("Panel bar moved by $diff and rotated by $qDiff")
         // Apply difference to parent
-        val parentPose = parent.getComponent<Transform>().transform
+        val parentPose = parentTransform.transform
         val newParentPose = parentPose.copy(
             t = parentPose.t + diff,
             q = parentPose.q * qDiff,

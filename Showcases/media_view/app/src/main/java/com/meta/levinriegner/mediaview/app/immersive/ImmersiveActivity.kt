@@ -24,9 +24,11 @@ import com.meta.spatial.vr.LocomotionSystem
 import com.meta.spatial.vr.VRFeature
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
@@ -126,11 +128,20 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
 
     // Create Entity
     val playerEntity = panelManager.createPlayerEntity(mediaModel)
-    PanelBar(
-        appSystemActivity = this@ImmersiveActivity,
+    val panelBar = PanelBar(
         parent = playerEntity,
         parentHeightMeters = mediaModel.panelWidthAndHeight().second / 2f,
-    ).attach()
+    )
+    activityScope.launch {
+      withContext(Dispatchers.IO) {
+        // TODO: Try to remove this when nailing the TransformParent
+        // Give some time for parent to position
+        delay(500L)
+      }
+      withContext(Dispatchers.Main) {
+        panelBar.attach()
+      }
+    }
     panelManager.createPlayerMenuEntity(mediaModel, playerEntity)
 
     _openMedia.value = _openMedia.value.toMutableMap().apply { put(mediaModel.id, mediaModel) }

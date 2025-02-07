@@ -42,7 +42,7 @@ android {
     minSdk = 29
     //noinspection ExpiredTargetSdkVersion
     targetSdk = 32
-    versionCode = 18
+    versionCode = 19
     versionName = "0.0.16"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -191,13 +191,14 @@ dependencies {
   androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
   // Meta Spatial SDK libs
-  implementation("com.meta.spatial:meta-spatial-sdk:$metaSpatialSdkVersion")
-  implementation("com.meta.spatial:meta-spatial-sdk-ovrmetrics:$metaSpatialSdkVersion")
-  implementation("com.meta.spatial:meta-spatial-sdk-physics:$metaSpatialSdkVersion")
-  implementation("com.meta.spatial:meta-spatial-sdk-toolkit:$metaSpatialSdkVersion")
-  implementation("com.meta.spatial:meta-spatial-sdk-vr:$metaSpatialSdkVersion")
-  implementation("com.meta.spatial:meta-spatial-sdk-mruk:$metaSpatialSdkVersion")
-  implementation("com.meta.spatial:meta-spatial-sdk-castinputforward:$metaSpatialSdkVersion")
+//  implementation("com.meta.spatial:meta-spatial-sdk:$metaSpatialSdkVersion")
+//  implementation("com.meta.spatial:meta-spatial-sdk-ovrmetrics:$metaSpatialSdkVersion")
+//  implementation("com.meta.spatial:meta-spatial-sdk-physics:$metaSpatialSdkVersion")
+//  implementation("com.meta.spatial:meta-spatial-sdk-toolkit:$metaSpatialSdkVersion")
+//  implementation("com.meta.spatial:meta-spatial-sdk-vr:$metaSpatialSdkVersion")
+//  implementation("com.meta.spatial:meta-spatial-sdk-mruk:$metaSpatialSdkVersion")
+//  implementation("com.meta.spatial:meta-spatial-sdk-castinputforward:$metaSpatialSdkVersion")
+  implementation(fileTree("libs") { include("meta-spatial-sdk-*.aar") })
 
   // Meta Spatial SDK dependencies
   implementation("com.squareup.okhttp3:okhttp:4.12.0")

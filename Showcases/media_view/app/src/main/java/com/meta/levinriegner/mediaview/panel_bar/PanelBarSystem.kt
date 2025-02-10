@@ -36,7 +36,7 @@ class PanelBarSystem : SystemBase() {
       if (currentPose != previousPose) {
         // Calculate difference
         val diff = currentPose.t - previousPose.t
-        val qDiff = currentPose.q * previousPose.q.inverse()
+        val qDiff = previousPose.q.inverse() * currentPose.q
         Timber.i("Panel bar moved by $diff and rotated by $qDiff")
         // Apply difference to parent
         val parentPose = parentTransform.transform

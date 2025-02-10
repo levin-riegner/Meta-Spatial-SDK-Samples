@@ -8,23 +8,24 @@ import com.meta.spatial.compose.composePanel
 import com.meta.spatial.core.Entity
 import com.meta.spatial.runtime.LayerConfig
 import com.meta.spatial.runtime.PanelConfigOptions.Companion.DEFAULT_DPI
+import com.meta.spatial.runtime.PanelSceneObject
 import com.meta.spatial.toolkit.Grabbable
 import com.meta.spatial.toolkit.PanelRegistration
+import com.meta.spatial.toolkit.SceneObjectSystem
 import com.meta.spatial.toolkit.SpatialActivityManager
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.createPanelEntity
+import timber.log.Timber
 import kotlin.random.Random
 
 class PanelBar(
-  val parent: Entity,
+  private val parent: Entity,
     // Unique registration id for the panel. Prefer using your own id generator.
   private val registrationId: Int = Random.nextInt(Int.MIN_VALUE, Int.MAX_VALUE),
-    // TODO: See if we can get this on runtime
-  private val parentHeightMeters: Float,
 ) {
 
   private val activity get() = SpatialActivityManager.currentActivity
-
+  private val systemManager get() = activity?.get()?.systemManager
   fun attach() {
     register()
     create()
@@ -54,16 +55,24 @@ class PanelBar(
 
   private fun create() {
     val barPose = parent.getComponent<Transform>().transform.copy()
-    barPose.t = barPose.t.copy(
-        y = barPose.t.y - parentHeightMeters / 2
-            - dpToMeters(HEIGHT_DP / 2 + MARGIN_DP),
-    )
-    Entity.createPanelEntity(
-        registrationId,
-        Transform(barPose),
-        Grabbable(),
-        PanelBarComponent(parent, barPose),
-    )
+    systemManager?.findSystem<SceneObjectSystem>()?.getSceneObject(parent)?.thenAccept {
+      val panel = it as? PanelSceneObject
+      if (panel == null) {
+        Timber.w("Parent is not a panel")
+        return@thenAccept
+      }
+      val parentHeightMeters = panel.getPanelShapeConfig().height
+      barPose.t = barPose.t.copy(
+          y = barPose.t.y - parentHeightMeters / 2
+              - dpToMeters(HEIGHT_DP / 2 + MARGIN_DP),
+      )
+      Entity.createPanelEntity(
+          registrationId,
+          Transform(barPose),
+          Grabbable(),
+          PanelBarComponent(parent, barPose),
+      )
+    }
   }
 
   companion object {

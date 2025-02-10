@@ -128,10 +128,7 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
 
     // Create Entity
     val playerEntity = panelManager.createPlayerEntity(mediaModel)
-    val panelBar = PanelBar(
-        parent = playerEntity,
-        parentHeightMeters = mediaModel.panelWidthAndHeight().second / 2f,
-    )
+    val panelBar = PanelBar(playerEntity)
     activityScope.launch {
       withContext(Dispatchers.IO) {
         // TODO: Try to remove this when nailing the TransformParent

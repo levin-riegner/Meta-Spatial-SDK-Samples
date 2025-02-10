@@ -207,6 +207,14 @@ dependencies {
   androidTestImplementation("androidx.compose.ui:ui-test-junit4")
   debugImplementation("androidx.compose.ui:ui-tooling")
   debugImplementation("androidx.compose.ui:ui-test-manifest")
+  debugImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+  debugImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+  debugImplementation("com.facebook.soloader:soloader:0.11.0")
+  debugImplementation("com.google.guava:guava:33.3.0-jre")
+  debugImplementation("javax.annotation:javax.annotation-api:1.3.2")
+  debugImplementation("com.facebook.infer.annotation:infer-annotation:0.18.0")
+  debugImplementation("javax.inject:javax.inject:1")
+  debugImplementation("androidx.annotation:annotation:1.8.2")
 
   // Monitoring
   implementation("com.datadoghq:dd-sdk-android-ndk:2.14.0")

@@ -10,7 +10,7 @@ import com.meta.levinriegner.mediaview.app.gallery.GalleryActivity
 import com.meta.levinriegner.mediaview.app.gallery.filter.MediaFilterActivity
 import com.meta.levinriegner.mediaview.app.gallery.media_select.delete_confirm.MediaDeleteConfirmActivity
 import com.meta.levinriegner.mediaview.app.gallery.menu.GalleryMenuActivity
-import com.meta.levinriegner.mediaview.app.immersive.component.LookAtHeadLoader
+import com.meta.levinriegner.mediaview.app.immersive.component.LookAtHead
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
 import com.meta.levinriegner.mediaview.app.immersive.panel.PanelRegistrationIds
 import com.meta.levinriegner.mediaview.app.immersive.panel.model.AppPanelRegistration
@@ -550,7 +550,7 @@ class PanelManager(
     when (mediaModel.mediaType) {
       VIDEO_360,
       IMAGE_360 -> {
-        immersiveMenu.setComponent(LookAtHeadLoader(once = true))
+        immersiveMenu.setComponent(LookAtHead(once = true))
         immersiveMenu.setComponent(Grabbable())
       }
 
@@ -629,7 +629,7 @@ class PanelManager(
       return
     }
     panel.entity.setComponent(Visible(show))
-    panel.entity.setComponent(LookAtHeadLoader(hasLooked = !show, once = !show, zOffset = 0.7f))
+    panel.entity.setComponent(LookAtHead(hasLooked = !show, once = !show, zOffset = 0.7f))
   }
 
   fun toggleGallery(show: Boolean) {

@@ -3,8 +3,8 @@
   ~ (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
   -->
 <resources>
-    <item name="LookAtHead_class" type="id" />
-    <item name="LookAtHead_zOffset" type="id" />
-    <item name="LookAtHead_once" type="id" />
-    <item name="LookAtHead_hasLooked" type="id" />
+    <item name="look_at_head_class" type="id" />
+    <item name="look_at_head_z_offset" type="id" />
+    <item name="look_at_head_once" type="id" />
+    <item name="look_at_head_has_looked" type="id" />
 </resources>

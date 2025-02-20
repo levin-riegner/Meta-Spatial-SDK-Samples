@@ -2,7 +2,7 @@
 
 package com.meta.levinriegner.mediaview.app.immersive.system
 
-import com.meta.levinriegner.mediaview.app.immersive.component.LookAtHead
+import com.meta.levinriegner.mediaview.app.immersive.component.LookAtHeadLoader
 import com.meta.spatial.core.Pose
 import com.meta.spatial.core.Quaternion
 import com.meta.spatial.core.Query
@@ -19,10 +19,10 @@ class LookAtHeadSystem : SystemBase() {
     val headPose = getHeadPose() ?: return
 
     // Query all entities that need to look at the head
-    val q = Query.where { has(LookAtHead.id, Transform.id) }
+    val q = Query.where { has(LookAtHeadLoader.id, Transform.id) }
     for (entity in q.eval()) {
 
-      val lookAtHead = entity.getComponent<LookAtHead>()
+      val lookAtHead = entity.getComponent<LookAtHeadLoader>()
       if (lookAtHead.once && lookAtHead.hasLooked) {
         continue
       }

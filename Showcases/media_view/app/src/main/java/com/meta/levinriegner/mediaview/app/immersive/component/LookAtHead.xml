@@ -1,0 +1,14 @@
+<!--
+~ (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+  -->
+
+<ComponentSchema packageName="com.meta.levinriegner.mediaview.app.immersive.component" >
+    <Component name="LookAtHead">
+        <Description>
+            A component to rotate an object to look at the user's head
+        </Description>
+        <FloatAttribute name="zOffset" defaultValue="1f" />
+        <BooleanAttribute name="once" defaultValue="true" />
+        <BooleanAttribute name="hasLooked" defaultValue="false" />
+    </Component>
+</ComponentSchema>

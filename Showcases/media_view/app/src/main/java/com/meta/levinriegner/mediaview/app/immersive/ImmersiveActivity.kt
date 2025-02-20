@@ -5,7 +5,7 @@ package com.meta.levinriegner.mediaview.app.immersive
 import android.net.Uri
 import android.os.Bundle
 import com.meta.levinriegner.mediaview.BuildConfig
-import com.meta.levinriegner.mediaview.app.immersive.component.LookAtHead
+import com.meta.levinriegner.mediaview.app.immersive.component.LookAtHeadLoader
 import com.meta.levinriegner.mediaview.app.immersive.compose.ComponentAppSystemActivity
 import com.meta.levinriegner.mediaview.app.immersive.entity.EnvironmentEntities
 import com.meta.levinriegner.mediaview.app.immersive.entity.PanelTransformations
@@ -101,7 +101,7 @@ class ImmersiveActivity : ComponentAppSystemActivity(), PanelDelegate {
   }
 
   private fun registerComponents() {
-    componentManager.registerComponent<LookAtHead>(LookAtHead.Companion)
+    componentManager.registerComponent<LookAtHeadLoader>(LookAtHeadLoader.Companion)
   }
 
   private fun registerSystems() {

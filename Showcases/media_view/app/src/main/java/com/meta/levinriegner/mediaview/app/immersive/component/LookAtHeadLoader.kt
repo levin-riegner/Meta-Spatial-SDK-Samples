@@ -8,7 +8,7 @@ import com.meta.spatial.core.ComponentBase
 import com.meta.spatial.core.ComponentCompanion
 import com.meta.spatial.core.FloatAttribute
 
-class LookAtHead(
+class LookAtHeadLoader(
     zOffset: Float = 1f,
     once: Boolean = true,
     hasLooked: Boolean = false,
@@ -22,8 +22,8 @@ class LookAtHead(
       zOffset: Float = this.zOffset,
       once: Boolean = this.once,
       hasLooked: Boolean = this.hasLooked,
-  ): LookAtHead {
-    return LookAtHead(zOffset, once, hasLooked)
+  ): LookAtHeadLoader {
+    return LookAtHeadLoader(zOffset, once, hasLooked)
   }
 
   override fun typeID(): Int {
@@ -32,6 +32,6 @@ class LookAtHead(
 
   companion object : ComponentCompanion {
     override val id = R.id.LookAtHead_class
-    override val createDefaultInstance = { LookAtHead() }
+    override val createDefaultInstance = { LookAtHeadLoader() }
   }
 }
